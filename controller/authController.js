@@ -40,7 +40,7 @@ module.exports = {
 
     checkPassword: async (req, res) => {
 
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.user._id);
 
         // Comparing Hashed Password
         bcrypt.compare(req.body.userPassword, user.userPassword, (err, result) => {
@@ -68,7 +68,7 @@ module.exports = {
                 userPassword: result,
                 isAdmin: req.body.isAdmin,
             };
-            User.findByIdAndUpdate(req.params.id, user, { new: true }).lean().then((doc) => {
+            User.findByIdAndUpdate(req.user._id, user, { new: true }).lean().then((doc) => {
                 delete doc.userPassword;
                 res.status(200).send(doc);
             }).catch((err) => {
@@ -99,7 +99,7 @@ module.exports = {
     },
 
     getUser: async (req, res) => {
-        const user = await User.findById(req.params.id).lean().then((doc) => {
+        const user = await User.findById(req.user._id).lean().then((doc) => {
             delete doc.userPassword;
             return res.status(200).send(doc);
         }).catch((err) => {

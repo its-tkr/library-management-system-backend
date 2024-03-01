@@ -6,8 +6,8 @@ router.post('/register',registerUser);
 
 router.post('/login',loginUser);
 
-router.post('/checkPassword/:id',auth,checkPassword);
-router.post('/updateUser/:id',auth,updateUser);
-router.get('/getUser/:id',auth,getUser);
+router.post('/checkPassword',auth,checkPassword);
+router.post('/updateUser',auth,updateUser);
+router.get('/getUser',auth,getUser);
 
 module.exports=router;
